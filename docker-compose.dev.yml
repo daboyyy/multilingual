@@ -1,0 +1,33 @@
+version: '3.8'
+
+volumes:
+  multilingual-datastore:
+  esdata:
+
+services:
+  multilingual-database:
+    container_name: multilingual-database
+    image: postgres:15-alpine3.16
+    restart: on-failure
+    volumes:
+      - multilingual-datastore:/var/lib/postgresql/data
+    environment:
+      POSTGRES_DB: multilingual
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: admin
+    command: postgres -c 'max_connections=20'
+    ports:
+      - '5433:5432'
+
+  elasticsearch:
+    image: docker.elastic.co/elasticsearch/elasticsearch:8.6.2
+    container_name: elasticsearch
+    environment:
+      - discovery.type=single-node
+      - ES_JAVA_OPTS=-Xms1024m -Xmx1024m
+      - 'xpack.security.enabled=false'
+    volumes:
+      - esdata:/usr/share/elasticsearch/data
+    ports:
+      - '9200:9200'
+      - '9300:9300'
