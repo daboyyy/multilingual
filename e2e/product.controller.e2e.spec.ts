@@ -1,9 +1,9 @@
 import { Test, TestingModule } from '@nestjs/testing';
 import { INestApplication, ValidationPipe } from '@nestjs/common';
 import * as request from 'supertest';
-import { AppModule } from '../app.module';
-import { CreateProductDto } from '../products/dto/create-product.dto';
-import { PrismaService } from '../repository/prisma.service';
+import { AppModule } from '../src/app.module';
+import { CreateProductDto } from '../src/products/dto/create-product.dto';
+import { PrismaService } from '../src/repository/prisma.service';
 
 describe('ProductController (e2e)', () => {
   let app: INestApplication;
